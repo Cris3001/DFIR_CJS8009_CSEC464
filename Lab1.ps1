@@ -99,25 +99,32 @@ echo "" "Printing adavance network info:" ""
 #List of all installed software
 #
 echo "" "Printing installed software:" ""
-$programInfo = Get-CimInstance Win32_Product
-$programInfo
+#$programInfo = Get-CimInstance Win32_Product
+#$programInfo
 
 #
 #Process list
 #
 echo "" "Printing processes:" ""
-$processInfo = Get-Process | Select-Object Name, ID, Location | Format-List
+$processInfo = Get-Process | Select-Object Name, ID, FileName | Format-List
 $processInfo
 
 #
 #Driver list
 #
 echo "" "Printing drivers:" ""
+$driverInfo = Get-CimInstance Win32_PNPSignedDriver 
+#| Select-Object Driver, BootCritical, OriginalFilename, Version, Date, ProviderName | Format-Table
+$driverInfo
 
 #
 #Downloads and Documents
 #
 echo "" "Printing Downloads and Documents:" ""
+$userPath = Get-ChildItem "C:\Users\" -Recurse -Filter 'Documents\'
+foreach( $file in $userPath ){
+        $file.FullName
+    }
 
 #
 #Todo 1
